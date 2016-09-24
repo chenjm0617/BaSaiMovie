@@ -102,15 +102,15 @@ class ThirdViewController: UIViewController, UITableViewDelegate, UITableViewDat
         headView.addSubview(numberL)
         numberL.backgroundColor = UIColor.whiteColor()
         
-        let button = UIButton.init(frame: CGRectMake(SCREEN_W - 60, 215, 40, 20))
-        button.layer.cornerRadius = 5
-        button.clipsToBounds = true
-        button.layer.borderColor = UIColor.blueColor().CGColor
-        button.layer.borderWidth = 1
-        button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
-        button.setTitle("订阅", forState: UIControlState.Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(13)
-        headView.addSubview(button)
+//        let button = UIButton.init(frame: CGRectMake(SCREEN_W - 60, 215, 40, 20))
+//        button.layer.cornerRadius = 5
+//        button.clipsToBounds = true
+//        button.layer.borderColor = UIColor.blueColor().CGColor
+//        button.layer.borderWidth = 1
+//        button.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+//        button.setTitle("订阅", forState: UIControlState.Normal)
+//        button.titleLabel?.font = UIFont.systemFontOfSize(13)
+//        headView.addSubview(button)
         
     }
     

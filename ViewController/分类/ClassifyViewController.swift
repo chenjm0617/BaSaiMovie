@@ -14,9 +14,9 @@ class ClassifyViewController: BaseViewController {
     var tableViewArray = NSMutableArray()  //存放tableView 数据aaa
     
     lazy var headView: UIView = {
-       let headView = UIView.init(frame: CGRectMake(0, 0, SCREEN_W, 700))
+       let headView = UIView.init(frame: CGRectMake(0, 0, SCREEN_W, 680))
         self.view.addSubview(headView)
-        headView.backgroundColor = UIColor.whiteColor()
+        headView.backgroundColor = UIColor.init(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
         return headView
     }()
     
@@ -52,7 +52,9 @@ class ClassifyViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         
+        self.automaticallyAdjustsScrollViewInsets = false
         self.navigationItem.title = "分类"
+        self.view.backgroundColor = UIColor.whiteColor()
         self.createUI()
         
         let classifyUrl = "http://www.moviebase.cn/uread/app/category/categoryList?deviceModel=HM%2BNOTE%2B1LTE&versionCode=1066&platform=2&sysver=4.4.4&channelId=1002&appVersion=1.6.0&deviceId=1B21F376753E91FF0B7070F02EF5D126"
@@ -65,6 +67,10 @@ class ClassifyViewController: BaseViewController {
     func connectionFinish(mc: MyConnection) -> Void {
         if mc.isFinish {
             self.parseData(mc.downloadData)
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.tableView.reloadData()
+                
+            })
             HDManager.stopLoading()
         }else{
             print("网络请求失败")
@@ -84,7 +90,7 @@ class ClassifyViewController: BaseViewController {
         for dic in articleList {
             tableViewArray.addObject(tableViewModel.modelWith(dic as! [String : AnyObject]))
         }
-        tableView.reloadData()
+        
     }
     
     func createUI() -> Void {
@@ -92,10 +98,6 @@ class ClassifyViewController: BaseViewController {
         label.text = "  专题"
         label.font = UIFont.boldSystemFontOfSize(20)
         headView.addSubview(label)
-        
-        let button = UIButton.init(frame: CGRectMake(SCREEN_W - 110, 5, 100, 30))
-        button.setTitle("查看全部", forState: UIControlState.Normal)
-        headView.addSubview(button)
     }
 
 }
@@ -115,6 +117,27 @@ extension ClassifyViewController: UICollectionViewDelegate, UICollectionViewData
         cell.numberL.text = "\(model.articlesNum)篇/\(model.subscribeNum)人订阅"
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.item == 0 {
+            let model = dataArray[indexPath.item] as! ClassifyModel
+            let cfvc = CFirstViewController()
+            cfvc.imageUrl = model.imgUrl
+            cfvc.nameStr = model.title
+            cfvc.numberStr1 = model.articlesNum
+            cfvc.numberStr2 = model.subscribeNum
+            self.navigationController?.pushViewController(cfvc, animated: true)
+        }else{
+            let csvc = CSecondViewController()
+            let model = dataArray[indexPath.item] as! ClassifyModel
+            csvc.imageUrl = model.imgUrl
+            csvc.nameStr = model.title
+            csvc.numberStr1 = model.articlesNum
+            csvc.numberStr2 = model.subscribeNum
+            csvc.id = model.id
+            self.navigationController?.pushViewController(csvc, animated: true)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -139,8 +162,27 @@ extension ClassifyViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let model = tableViewArray[indexPath.row] as! tableViewModel
+        let fvc = FirstViewController()
+        fvc.webViewUrl = model.articleUrl
+        self.navigationController?.pushViewController(fvc, animated: true)
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel.init(frame: CGRectMake(0, 0, SCREEN_W, 30))
+        label.text = "  热门文章"
+        label.font = UIFont.boldSystemFontOfSize(18)
+        return label
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
 }
 
