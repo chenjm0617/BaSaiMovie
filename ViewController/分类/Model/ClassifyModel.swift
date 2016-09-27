@@ -51,6 +51,7 @@ class tableViewModel: NSObject {
 class pushModel: NSObject {
     var title: String!
     var praiseCount: String!
+    var articleContentUrl: String!
     
     static func modelWith(dic: [String: AnyObject])->pushModel{
         let model = pushModel()

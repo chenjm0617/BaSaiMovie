@@ -47,19 +47,19 @@ class RecommendViewController: BaseViewController {
         let recommendUrl = "http://www.moviebase.cn/uread/app/recommend/recommend?pageContext=1&platform=2&naviId=2&sysver=4.4.4&channelId=1002&appVersion=1.6.0&deviceModel=HM%2BNOTE%2B1LTE&versionCode=1066&deviceId=1B21F376753E91FF0B7070F02EF5D126"
         let mc = MyConnection.init(urlStr: recommendUrl, target: self, action: #selector(self.connectionFinish(_:)))
         mc.start()
-        HDManager.startLoading()
+//        HDManager.startLoading()
     }
     
     func connectionFinish(mc: MyConnection) -> Void {
         if mc.isFinish {
             self.parseData(mc.downloadData)
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
         }else{
             let ac = UIAlertController.init(title: "网络请求失败", message: "请检查网络链接", preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction.init(title: "确定", style: UIAlertActionStyle.Default, handler: nil)
             ac.addAction(action)
             self.presentViewController(ac, animated: true, completion: nil)
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
         }
     }
     
@@ -199,14 +199,13 @@ extension RecommendViewController: UITableViewDelegate, UITableViewDataSource {
             self.navigationController?.pushViewController(svc, animated: true)
         }else{
             let model = dataArray[indexPath.row] as! TRecommendModel
-            let tvc = ThirdViewController()
-            tvc.imageUrl = model.imgUrl
-            tvc.nameStr = model.title
-            tvc.numberStr1 = model.articlesNum
-            tvc.numberStr2 = model.subscribeNum
-            tvc.id = model.id
-            self.navigationController?.pushViewController(tvc, animated: true)
-        }
+            let csvc = CSecondViewController()
+            csvc.imageUrl = model.imgUrl
+            csvc.nameStr = model.title
+            csvc.numberStr1 = model.articlesNum
+            csvc.numberStr2 = model.subscribeNum
+            csvc.id = model.id
+            self.navigationController?.pushViewController(csvc, animated: true)        }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

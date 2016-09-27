@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="stillCell" customModule="BaSaiMovie" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="130" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="130" height="80"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TsC-Tn-toR">
+                        <rect key="frame" x="0.0" y="0.0" width="130" height="80"/>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="TsC-Tn-toR" secondAttribute="trailing" id="5zF-yN-dOT"/>
+                <constraint firstItem="TsC-Tn-toR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6bc-3g-vrv"/>
+                <constraint firstItem="TsC-Tn-toR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="I16-if-3QR"/>
+                <constraint firstAttribute="bottom" secondItem="TsC-Tn-toR" secondAttribute="bottom" id="kpr-uP-KlM"/>
+            </constraints>
+            <size key="customSize" width="152" height="51"/>
+            <connections>
+                <outlet property="imageView" destination="TsC-Tn-toR" id="9Eq-j7-kIy"/>
+            </connections>
+            <point key="canvasLocation" x="229" y="225"/>
+        </collectionViewCell>
+    </objects>
+</document>

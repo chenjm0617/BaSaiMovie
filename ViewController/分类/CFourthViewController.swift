@@ -22,8 +22,6 @@ class CFourthViewController: UIViewController {
         self.view.backgroundColor = UIColor.blackColor()
         
         self.createUI()
-        print(imageArray.count)
-        print(imageArray[0])
     }
     
     

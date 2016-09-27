@@ -10,6 +10,8 @@ import UIKit
 
 class CFirstViewController: UIViewController {
 
+    var page = 1
+    
     var imageUrl: String!
     var nameStr: String!
     var numberStr1: NSNumber!
@@ -30,8 +32,8 @@ class CFirstViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView.init(frame: CGRectMake(0, 64, SCREEN_W, SCREEN_H - 64 - 49))
         tableView.registerNib(UINib.init(nibName: "firstCell", bundle: nil), forCellReuseIdentifier: "firstCell")
-        tableView.delegate = self
         tableView.tableHeaderView = self.headView
+        tableView.delegate = self
         tableView.dataSource = self
         self.view.addSubview(tableView)
         return tableView
@@ -42,24 +44,37 @@ class CFirstViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        self.navigationItem.title = "视觉系"
+        self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = UIColor.whiteColor()
         
         let pushUrl = "http://www.moviebase.cn/uread/app/topic/topicDetail/articleList?pageContext=1&platform=2&sysver=4.4.4&channelId=1002&appVersion=1.6.0&deviceModel=HM%2BNOTE%2B1LTE&topicId=a859adbfce8041d3bd2ded0ae383d3b6&versionCode=1066&deviceId=1B21F376753E91FF0B7070F02EF5D126"
         let mc = MyConnection.init(urlStr: pushUrl, target: self, action: #selector(self.connectionFinish(_:)))
         mc.start()
-        HDManager.startLoading()
+//        HDManager.startLoading()
         
         self.createUI()
+        
+//        weak var weakSelf = self
+//        tableView.mj_footer = MJRefreshAutoNormalFooter.init(refreshingBlock:  {
+//            let pushUrl = String.init(format: "http://www.moviebase.cn/uread/app/topic/topicDetail/articleList?pageContext=%d&platform=2&sysver=4.4.4&channelId=1002&appVersion=1.6.0&topicId=a859adbfce8041d3bd2ded0ae383d3b6&versionCode=1066&deviceId=1B21F376753E91FF0B7070F02EF5D126", weakSelf!.page)
+//            let mc = MyConnection.init(urlStr: pushUrl, target: self, action: #selector(self.connectionFinish(_:)))
+//            mc.start()
+//            HDManager.startLoading()
+//        })
+//        tableView.mj_footer.beginRefreshing()
     }
     
     func connectionFinish(mc: MyConnection) -> Void {
         if mc.isFinish {
             self.parseData(mc.downloadData)
             tableView.reloadData()
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
+//            page += 1
+            
         }else{
             print("网络请求失败")
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
         }
     }
     
@@ -76,6 +91,7 @@ class CFirstViewController: UIViewController {
             let pictorialUrls = object["pictorialUrls"] as! [String]
             imageArray.addObject(pictorialUrls)
         }
+//        tableView.mj_footer.endRefreshing()
     }
     
     func createUI() -> Void {
@@ -126,12 +142,18 @@ extension CFirstViewController: UITableViewDelegate, UITableViewDataSource {
         cell.iconView.sd_setImageWithURL(NSURL.init(string: smallModel.headImgUrl))
         cell.nickL.text = smallModel.nickname
         let imageModel = imageArray[indexPath.row] as! [String]
-        for i in 1...9 {
-            let image = cell.viewWithTag(i) as! UIImageView
-            image.sd_setImageWithURL(NSURL.init(string: imageModel[i - 1]))
-            
+        if imageModel.count < 10 {
+            for i in 1...imageModel.count {
+                let image = cell.viewWithTag(i) as! UIImageView
+                image.sd_setImageWithURL(NSURL.init(string: imageModel[i - 1]))
+            }
+
+        }else{
+            for i in 1...9 {
+                let image = cell.viewWithTag(i) as! UIImageView
+                image.sd_setImageWithURL(NSURL.init(string: imageModel[i - 1]))
+            }
         }
-        
         cell.numberBtn.addTarget(self, action: #selector(self.numberBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         return cell
@@ -149,5 +171,13 @@ extension CFirstViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 530
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let model = dataArray[indexPath.row] as! pushModel
+        let fvc = FirstViewController()
+        fvc.webViewUrl = model.articleContentUrl
+        self.navigationController?.pushViewController(fvc, animated: true)
     }
 }

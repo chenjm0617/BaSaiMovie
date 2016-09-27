@@ -37,7 +37,7 @@ class ClassifyViewController: BaseViewController {
     }()
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView.init(frame: CGRectMake(0, 64, SCREEN_W, SCREEN_H - 64 - 49), style: UITableViewStyle.Plain)
+        let tableView = UITableView.init(frame: CGRectMake(0, 64, SCREEN_W, SCREEN_H - 64 - 49), style: UITableViewStyle.Grouped)
         tableView.registerNib(UINib.init(nibName: "buttomCell", bundle: nil), forCellReuseIdentifier: "buttomCell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -60,7 +60,7 @@ class ClassifyViewController: BaseViewController {
         let classifyUrl = "http://www.moviebase.cn/uread/app/category/categoryList?deviceModel=HM%2BNOTE%2B1LTE&versionCode=1066&platform=2&sysver=4.4.4&channelId=1002&appVersion=1.6.0&deviceId=1B21F376753E91FF0B7070F02EF5D126"
         let mc = MyConnection.init(urlStr: classifyUrl, target: self, action: #selector(self.connectionFinish(_:)))
         mc.start()
-        HDManager.startLoading()
+//        HDManager.startLoading()
         
     }
     
@@ -71,10 +71,10 @@ class ClassifyViewController: BaseViewController {
                 self.tableView.reloadData()
                 
             })
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
         }else{
             print("网络请求失败")
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
         }
     }
     

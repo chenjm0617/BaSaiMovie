@@ -35,6 +35,7 @@ class CThirdViewController: UIViewController {
         
         let label = UILabel.init(frame: CGRectMake(40, (imageView.frame.size.height - 100) / 2, SCREEN_W - 2 * 40, 100))
         label.textColor = UIColor.whiteColor()
+        label.numberOfLines = 0
         label.textAlignment = .Center
         label.text = content
         backView.addSubview(label)

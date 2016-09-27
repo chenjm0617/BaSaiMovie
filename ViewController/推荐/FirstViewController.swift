@@ -18,7 +18,7 @@ class FirstViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.automaticallyAdjustsScrollViewInsets = false
-        HDManager.startLoading()
+//        HDManager.startLoading()
         self.createUI()
         
     }
@@ -29,6 +29,6 @@ class FirstViewController: UIViewController {
         let request = NSURLRequest.init(URL: url!)
         self.view.addSubview(wv)
         wv.loadRequest(request)
-        HDManager.stopLoading()
+//        HDManager.stopLoading()
     }
 }

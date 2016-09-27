@@ -53,7 +53,7 @@ class ThirdViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let url = String.init(format: "http://www.moviebase.cn/uread/app/topic/topicDetail/articleList?pageContext=%d&platform=2&sysver=4.4.4&channelId=1002&appVersion=1.6.0&topicId=%@&versionCode=1066&deviceId=1B21F376753E91FF0B7070F02EF5D126", weakSelf!.page, weakSelf!.id)
             let mc = MyConnection.init(urlStr: url, target: self, action: #selector(self.connectionFinish(_:)))
             mc.start()
-            HDManager.startLoading()
+//            HDManager.startLoading()
         })
         tableView.mj_footer.beginRefreshing()
     }
@@ -62,11 +62,11 @@ class ThirdViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if mc.isFinish {
             self.parseData(mc.downloadData)
             tableView.reloadData()
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
             page += 1
         }else{
             print("网络请求失败")
-            HDManager.stopLoading()
+//            HDManager.stopLoading()
         }
     }
     
